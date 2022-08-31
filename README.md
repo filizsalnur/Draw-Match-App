@@ -3,12 +3,12 @@ Written in N-layer architecture
 
 ## INSTALL
 
-The code was written in Visual Studio 2019
+The code was written in Visual Studio 2019 /
 Written with : ASP.Net Core version--5.0 
 
 ## RUN
 
-Endpoints can be seen in the Swagger interface by running Project.API
+Endpoints can be seen in the Swagger interface by running Project.API /
 After running the Project.API, you can access the website by running the code at: [Project Vue.js](https://github.com/filizsalnur/Draw-Match-App-Vue.js)
 
 
