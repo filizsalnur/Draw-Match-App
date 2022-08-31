@@ -2,6 +2,7 @@
 Written in N-layer architecture
 
 ##INSTALL
+```
 The code was written in Visual Studio 2019
 Written with : ASP.Net Core version--5.0 
 
