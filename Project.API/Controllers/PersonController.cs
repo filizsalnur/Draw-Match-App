@@ -165,7 +165,7 @@ namespace Project.API.Controllers
         [HttpPost("Draw")]
         public async Task<IActionResult> DrawMethod([FromBody] List<Person> personList)
         {
-            int controller = 1;
+            bool isController=true;
             int size = personList.Count();
             List<int> secondPersonList = new List<int>();
             for (int i = 0; i < size; i++)
@@ -177,7 +177,7 @@ namespace Project.API.Controllers
 
             for (int i = 0; i < size; i++)
             {
-                controller = 1;
+                isController=true;
                 DrawedUserDTO user=new DrawedUserDTO();
                 
                 
@@ -209,13 +209,13 @@ namespace Project.API.Controllers
                                 secondPersonList.Add(j);
                             }
 
-                            controller = 0;
+                            isController = false;
                             break;
                         }
                     } while (secondPersonList[number]== i );
                     
                 }
-                if(controller==1)
+                if(isController) 
                 {
                     user.ChoserUser = personList[i];
                     user.ChosenUser = personList[secondPersonList[number]];
