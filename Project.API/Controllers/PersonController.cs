@@ -20,19 +20,19 @@ namespace Project.API.Controllers
     {
 
 
-       
-        [HttpPost("Draw")]
+        //Gets json type person information.It draws. Matches choser and chosen persons
+                [HttpPost("Draw")]
         public async Task<IActionResult> DrawMethod([FromBody] List<Person> personList)
         {
             bool isController=true;
             int size = personList.Count();
-            List<int> secondPersonList = new List<int>();
+            List<int> secondPersonList = new List<int>(); //It keeps the index information of the people. Random selection is made according to this list
             for (int i = 0; i < size; i++)
             {
                 secondPersonList.Add(i);
             }
 
-            List<DrawedUserDTO> returnList = new List<DrawedUserDTO>();
+            List<DrawedUserDTO> returnList = new List<DrawedUserDTO>();  //keeps the dto to be returned
 
             for (int i = 0; i < size; i++)
             {
@@ -45,7 +45,7 @@ namespace Project.API.Controllers
                 
                 
 
-                if (secondPersonList[number] == i)
+                if (secondPersonList[number] == i) //It checks whether the person pulls himself or not. Continues until someone else withdraws
                 {
                     
                     do
@@ -54,7 +54,7 @@ namespace Project.API.Controllers
                         int number2 = random2.Next(secondPersonList.Count);
                         number = number2;
                         
-                        if (secondPersonList.Count()==1)
+                        if (secondPersonList.Count()==1) //If the last person draws himself, it clears the lists and makes the draw all over again.
                         {
 
                             returnList.Clear();
@@ -74,7 +74,7 @@ namespace Project.API.Controllers
                     } while (secondPersonList[number]== i );
                     
                 }
-                if(isController) 
+                if(isController)  //checks if the previous loop has been exited with a break status
                 {
                     user.ChoserUser = personList[i];
                     user.ChosenUser = personList[secondPersonList[number]];
@@ -88,14 +88,15 @@ namespace Project.API.Controllers
             
             return Ok(returnList);
         }
-       
-        
-        [HttpPost("Matching")]
+
+
+        //Gets json type person information. Makes pairs of persons. Returns two persons groups as results
+                [HttpPost("Matching")]
         public async Task<IActionResult> MatchingMethod([FromBody] List<Person> personList)
         {
             int groupNumber;
-            int size = personList.Count();
-            List<int> numberList = new List<int>();
+            int size = personList.Count(); //keeps the dto to be returned
+            List<int> numberList = new List<int>(); //It keeps the index information of the people. Random selection is made according to this list
             List<MatchedUserDTO> returnMatchList = new List<MatchedUserDTO>();
 
             for (int i = 0; i < size; i++)
@@ -129,15 +130,13 @@ namespace Project.API.Controllers
                 numberList.RemoveAt(number_2);
 
             }
-            if (size % 2 != 0)
+            if (size % 2 != 0) //If the number of people is odd, 1 person will be alone
             {
-                Console.WriteLine(personList[numberList[0]].Id + "-" + personList[numberList[0]].Name + " " + personList[numberList[0]].Surname);
-
                 MatchedUserDTO user = new MatchedUserDTO();
                 user.FirstUser = personList[numberList[0]];
                 user.SecondUser = new Person()
-                {
-                    Id = 0,
+                {   
+                    Id = 0,  //the unmatched person is kept in the list with an empty person with id=0
                     Name = "bay",
                     Surname = "bay",
                 };
